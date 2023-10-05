@@ -1,11 +1,11 @@
 public class Endereco {
     private String rua;
-    private String numero;
+    private int numero;
     private String complemento;
     private String bairro;
     private String cidade;
 
-    public Endereco(String rua, String numero, String complemento, String bairro, String cidade) {
+    public Endereco(String rua, int numero, String complemento, String bairro, String cidade) {
         this.rua = rua;
         this.numero = numero;
         this.complemento = complemento;
@@ -21,12 +21,16 @@ public class Endereco {
         this.rua = rua;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
     public void setNumero(int numero) {
-        this.numero = Integer.toString(numero);
+        if(numero < 0) {
+            this.numero = 0;
+        } else {
+            this.numero = numero;
+        }
     }
 
     public String getComplemento() {

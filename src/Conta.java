@@ -8,7 +8,7 @@ public class Conta {
     public Conta(String agencia, int numeroConta, double saldo, int idUsuario) {
         this.agencia = agencia;
         this.numeroConta = numeroConta;
-        this.saldo = saldo;
+        this.saldo = 0;
         this.idUsuario = idUsuario;
     }
 
@@ -30,5 +30,17 @@ public class Conta {
 
     public int getidUsuario() {
         return idUsuario;
+    }
+
+    public void depositar(double valor) {
+        this.saldo += valor;
+    }
+
+    public void sacar(double valor) {
+        if (valor <= this.saldo) {
+            this.saldo -= valor;
+        } else {
+            System.out.println("Saldo insuficiente!");
+        }
     }
 }

@@ -9,15 +9,31 @@ public class Transferencia {
         this.valor = valor;
     }
 
+    public Transferencia(double valorTransferencia, Usuario usuario, Usuario u) {
+    }
+
+    public Transferencia(double valorTransferencia, String cpfDestinatario, String dataNascimentoDestinatario) {
+    }
+
     public Conta getContaOrigem() {
-        return contaOrigem;
+        return this.contaOrigem;
     }
 
     public Conta getContaDestino() {
-        return contaDestino;
+        return this.contaDestino;
     }
 
     public double getValor() {
-        return valor;
+        return this.valor;
     }
+
+    public Usuario getRemetente() {
+        return null;
+    }
+
+    public Usuario getDestinatario() {
+        return null;
+    }
+
+    
 }

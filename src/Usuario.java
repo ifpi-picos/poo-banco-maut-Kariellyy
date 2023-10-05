@@ -1,16 +1,19 @@
+
 public class Usuario {
     public static int contador;
     private int id;
     private String nome;
     private String cpf;
     private String dataNascimento;
+    private Endereco endereco;
     
 
-    public Usuario(int id, String nome, String cpf, String dataNascimento) {
+    public Usuario(String nome, String cpf, String dataNascimento, Endereco endereco) {
         this.id = contador++;
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
+        this.endereco = endereco;
     }
 
     public int getId() {
@@ -27,5 +30,9 @@ public class Usuario {
 
     public String getDataNascimento() {
         return dataNascimento;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
     }
 }
