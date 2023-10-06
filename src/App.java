@@ -6,7 +6,8 @@ public class App {
     static Scanner input = new Scanner(System.in);
     static List<Conta> contas = new ArrayList<Conta>(); // Lista para armazenar as contas
     static List<Usuario> usuarios = new ArrayList<Usuario>(); // Lista para armazenar os usuários
-    static List<Transferencia> transferencias = new ArrayList<Transferencia>(); // Lista para armazenar as transferências
+    static List<Transferencia> transferencias = new ArrayList<Transferencia>(); // Lista para armazenar as
+                                                                                // transferências
 
     public static void main(String[] args) throws Exception {
         while (true) {
@@ -67,13 +68,12 @@ public class App {
         Usuario newUsuario = new Usuario(nome, cpf, dataNascimento, endereco);
         usuarios.add(newUsuario);
 
-        Conta novaConta = new Conta("0001", 1, 0, newUsuario.getId()); // Cria uma nova conta com saldo 0 (zero
+        Conta novaConta = new Conta("0001", 0, newUsuario); // Cria uma nova conta com saldo 0
         contas.add(novaConta);
 
         System.out.println("Conta criada com sucesso!");
     }
 
-    
     static void entrarNaConta() {
         // Método para entrar na conta
         System.out.println("Digite seu CPF: ");
@@ -100,7 +100,7 @@ public class App {
 
         // Encontra a conta associada ao usuário
         for (Conta c : contas) {
-            if (c.getidUsuario() == usuario.getId()) {
+            if (c.getUsuario().equals(usuario)) {
                 conta = c;
                 break;
             }
@@ -136,6 +136,19 @@ public class App {
                     conta.sacar(valorSaque);
                     System.out.println("Saque efetuado com sucesso!");
                     break;
+                case 3:
+                    System.out.print("Número da Agência: ");
+                    String numeroAgenciaDestino = input.next();
+                    System.out.print("Número da Conta: ");
+                    String numeroContaDestino = input.next();
+
+                    Conta destino = new Conta(numeroAgenciaDestino, Integer.parseInt(numeroContaDestino), null);
+
+                    System.out.print("Valor que deseja transferir: R$ ");
+                    double valorTransferencia = input.nextDouble();
+                    conta.transferir(destino, valorTransferencia);
+                    break;
+
             }
         }
     }
