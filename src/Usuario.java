@@ -1,12 +1,16 @@
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario {
     public static int contador;
     private String nome;
     private String cpf;
-    private String dataNascimento;
+    private Date dataNascimento;
     private Endereco endereco;
+    private List<Conta> contas = new ArrayList<>();
 
-    public Usuario(String nome, String cpf, String dataNascimento, Endereco endereco) {
+    public Usuario(String nome, String cpf, Date dataNascimento, Endereco endereco) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
@@ -22,11 +26,19 @@ public class Usuario {
         return cpf;
     }
 
-    public String getDataNascimento() {
+    public Date getDataNascimento() {
         return dataNascimento;
     }
 
     public Endereco getEndereco() {
         return endereco;
+    }
+
+    public List<Conta> getContas() {
+        return contas;
+    }
+
+    public void adicionarConta(Conta conta) {
+        contas.add(conta);
     }
 }

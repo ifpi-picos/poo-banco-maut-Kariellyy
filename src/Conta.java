@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Conta {
     private String agencia;
@@ -7,23 +5,13 @@ public class Conta {
     private double saldo;
     private Usuario usuario;
     private static int contador;
-    private List<Conta> contas = new ArrayList<>();
 
     public Conta(String agencia, double saldo, Usuario usuario) {
         this.agencia = agencia;
         this.numeroConta = contador++;
         this.saldo = 0;
         this.usuario = usuario;
-        this.contas = new ArrayList<>();
 
-    }
-
-    public List<Conta> getContas() {
-        return contas;
-    }
-
-    public void adicionarConta(Conta conta) {
-        contas.add(conta);
     }
 
     public Usuario getUsuario() {
@@ -40,10 +28,6 @@ public class Conta {
 
     public double getSaldo() {
         return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
     }
 
     public void depositar(double valor) {
@@ -67,4 +51,6 @@ public class Conta {
             System.out.println("Saldo insuficiente");
         }
     }
+
+
 }
