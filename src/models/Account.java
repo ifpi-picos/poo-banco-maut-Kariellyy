@@ -28,12 +28,23 @@ public class Account {
     }
 
     public void bag(double value){
-        this.balance -= value;
+        if (balance > 0){
+            this.balance -= value;
+            System.out.println("Saque realizado com sucesso!");
+        }else{
+            System.out.println("Saldo insuficiente!");
+        }
+        
     }
 
     public void transfer(double value, Account destinationAccount){
-        this.balance -= value;
-        destinationAccount.deposit(value);
+        if (balance > 0){
+            this.balance -= value;
+            destinationAccount.deposit(value);
+            System.out.println("Transferência realizada com sucesso!");
+        }else{
+            System.out.println("Saldo insuficiente!");
+        }
     }
 
 
