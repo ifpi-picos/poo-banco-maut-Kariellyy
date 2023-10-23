@@ -1,9 +1,9 @@
-package models;
+package models.entities;
 
 public class Account {
-    private int agency;
-    private int accountNumber;
-    private double balance;
+    private int agency; // "Private" só pode ser acessado/manipulado dentro desta classe;
+    private final int accountNumber; // "Final" indica que ele é uma constante;
+    protected double balance; // "Protected" indica que ele é visível nesta classes e nas classes filhas;
 
     public Account(int agency, int accountNumber, double balance){
         this.agency = agency;
