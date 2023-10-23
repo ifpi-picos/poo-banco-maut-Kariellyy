@@ -15,7 +15,7 @@ public class CurrentAccount extends Account {
     public void overdraft(double balance, double value){
         if (balance < 0){
             balance -= value;
-            System.out.println("Transferencia realizada com sucesso!");
+            System.out.println("Transferência realizada com sucesso!");
         }
     }
 
@@ -23,9 +23,11 @@ public class CurrentAccount extends Account {
     public void transfer(double value, Account destinationAccount){
         if (transferQuantity > 2 ){
             this.balance -= value * 0.1;
+            System.out.println("Tranfêrencia realizada com sucesso, com taxa de 10% no\nvalor por passar do limite de transações.");
         }else{
             this.balance -= value;
             destinationAccount.deposit(value);
+            System.out.println("Tranferência realizada com sucesso");
         }
         transferQuantity++;
     }
