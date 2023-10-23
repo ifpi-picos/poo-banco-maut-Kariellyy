@@ -1,4 +1,4 @@
-package models.entities;
+package br.edu.ifpi.poo.models;
 
 public class CurrentAccount extends Account {
     private double overdraft; //Cheque especial
@@ -22,7 +22,7 @@ public class CurrentAccount extends Account {
     @Override
     public void transfer(double value, Account destinationAccount){
         if (transferQuantity > 2 ){
-            this.balance -= value * 0.1;
+            this.balance -= (value * 0.1) + value;
             System.out.println("Tranfêrencia realizada com sucesso, com taxa de 10% no\nvalor por passar do limite de transações.");
         }else{
             this.balance -= value;

@@ -1,4 +1,4 @@
-package models.entities;
+package br.edu.ifpi.poo.models;
 
 public class Address {
     private String publicPlace; // logradouro;

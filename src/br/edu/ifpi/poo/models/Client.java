@@ -1,4 +1,4 @@
-package models.entities;
+package br.edu.ifpi.poo.models;
 import java.util.Date;
 
 public class Client {

@@ -1,4 +1,4 @@
-package models.entities;
+package br.edu.ifpi.poo.models;
 
 public class Account {
     private int agency; // "Private" só pode ser acessado/manipulado dentro desta classe;
@@ -27,7 +27,7 @@ public class Account {
         this.balance += value;
     }
 
-    public void bag(double value){
+    public void withdraw(double value){
         if (balance > 0){
             this.balance -= value;
             System.out.println("Saque realizado com sucesso!");
