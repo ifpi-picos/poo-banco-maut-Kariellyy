@@ -3,8 +3,8 @@ package br.edu.ifpi.poo.models;
 public class SavingsAccount extends Account {
     private double perfomance; // Rendimento
 
-    public SavingsAccount(int agency, int accountNumber, double balance){
-        super(agency, accountNumber, balance);
+    public SavingsAccount(int agency, int accountNumber, double balance, Client client){
+        super(agency, accountNumber, balance, client);
     }
 
     public double getPerfomance(){

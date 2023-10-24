@@ -4,8 +4,8 @@ public class CurrentAccount extends Account {
     private double overdraft; //Cheque especial
     private int transferQuantity = 0;
 
-    public CurrentAccount(int agency, int accountNumber, double balance){
-        super(agency, accountNumber, balance);
+    public CurrentAccount(int agency, int accountNumber, double balance, Client client){
+        super(agency, accountNumber, balance, client);
     }
 
     public double getOverdraft(){
