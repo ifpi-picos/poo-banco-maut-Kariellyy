@@ -1,17 +1,16 @@
 package br.edu.ifpi.poo.models;
 
-import java.util.ArrayList;
-
-public class Account {
-    private int agency; // "Private" só pode ser acessado/manipulado dentro desta classe;
+public abstract class Account {
+    private final int agency; // "Private" só pode ser acessado/manipulado dentro desta classe;
     private final int accountNumber; // "Final" indica que ele é uma constante;
     protected double balance; // "Protected" indica que ele é visível nesta classes e nas classes filhas;
     private Client client;
 
-    public Account(int agency, int accountNumber, double balance, Client client){
+    public Account(int agency, int accountNumber, Client client){
         this.agency = agency;
         this.accountNumber = accountNumber;
         this.balance = 0;
+        this.client = client;
     }
 
     public Client getclient(){
@@ -53,10 +52,4 @@ public class Account {
             System.out.println("Saldo insuficiente!");
         }
     }
-
-    public void extract(){
-    }
-
-
-    
 }

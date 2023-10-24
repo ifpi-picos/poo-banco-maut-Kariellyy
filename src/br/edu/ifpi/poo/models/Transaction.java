@@ -1,12 +1,13 @@
 package br.edu.ifpi.poo.models;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Transacao {
+public class Transaction {
     private String type;
     private Date date;
     private double value;
 
-    public Transacao(String type, Date date, double value){
+    public Transaction(String type, double value){
         this.type = type;
         this.date = new Date();
         this.value = value;
@@ -26,9 +27,7 @@ public class Transacao {
 
     @Override
     public String toString(){
-        return "Transação: " + this.getType() + "\nData: " + this.getDate() + "\nValor: " + this.getValue();
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return "Transação: " + this.getType() + "\nData: " + format.format(date) + "\nValor: " + this.getValue();
     }
-
-
-    
 }
