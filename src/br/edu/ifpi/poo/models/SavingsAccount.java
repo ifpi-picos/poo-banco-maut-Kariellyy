@@ -7,6 +7,7 @@ public class SavingsAccount extends Account {
         super(agency, client);
     }
 
+
     public double getPerfomance(){
         return perfomance;
     }

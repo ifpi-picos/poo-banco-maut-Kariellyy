@@ -15,6 +15,9 @@ public class Address {
         this.uf = uf;
     }
 
+    public Address(int number2, String neighborhood2, String city2, String uf2) {
+    }
+
     public String getPublicPlace(){
         return publicPlace;
     }
