@@ -2,15 +2,24 @@ package br.edu.ifpi.poo.models;
 
 public abstract class Account {
     private final int agency; // "Private" só pode ser acessado/manipulado dentro desta classe;
-    private final int accountNumber; // "Final" indica que ele é uma constante;
+    private final String accountNumber; // "Final" indica que ele é uma constante;
     protected double balance; // "Protected" indica que ele é visível nesta classes e nas classes filhas;
     private Client client;
 
-    public Account(int agency, int accountNumber, Client client){
+    private static int numberOfAccounts = 1;
+
+    public Account(int agency, Client client){
         this.agency = agency;
-        this.accountNumber = accountNumber;
+        this.accountNumber = generateAccountNumber();
         this.balance = 0;
         this.client = client;
+    }
+
+    private String generateAccountNumber(){
+        String accountNumber = String.format("%04d", numberOfAccounts);
+        numberOfAccounts++;
+
+        return accountNumber;
     }
 
     public Client getclient(){
@@ -21,7 +30,7 @@ public abstract class Account {
         return agency;
     }
 
-    public int getAccountNumber(){
+    public String getAccountNumber(){
         return accountNumber;
     }
 
@@ -29,27 +38,9 @@ public abstract class Account {
         return balance;
     }
 
-    public void deposit(double value){
-        this.balance += value;
-    }
+    public abstract void deposit(double value);
+    
+    public abstract void withdraw(double value);
 
-    public void withdraw(double value){
-        if (balance > 0){
-            this.balance -= value;
-            System.out.println("Saque realizado com sucesso!");
-        }else{
-            System.out.println("Saldo insuficiente!");
-        }
-        
-    }
-
-    public void transfer(double value, Account destinationAccount){
-        if (balance > 0){
-            this.balance -= value;
-            destinationAccount.deposit(value);
-            System.out.println("Transferência realizada com sucesso!");
-        }else{
-            System.out.println("Saldo insuficiente!");
-        }
-    }
+    public abstract void transfer(double value, Account destinationAccount);
 }
