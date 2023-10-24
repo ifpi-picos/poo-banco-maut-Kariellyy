@@ -41,8 +41,9 @@ public class Main {
                 case 2:
                     createSavingsAccount();
                     break;
-
-
+                case 3:
+                    enterAccount();
+                    break;
             }
 
 
@@ -186,5 +187,113 @@ public class Main {
             System.exit(0);
         }        
 
+    }
+
+    private static void enterAccount(){
+        System.out.println("Sua conta é corrente ou poupança? ");
+        System.out.println("1 - Corrente");
+        System.out.println("2 - Poupança");
+        int option = input.nextInt();
+
+        if (option == 1){
+            System.out.println("Digite o número da sua conta: ");
+            String accountNumber = input.next();
+
+            System.out.println("Digite a agência: ");
+            int agency = input.nextInt();
+
+            System.out.println("Digite o CPF: ");
+            String cpf = input.next();
+
+            Client client = null;
+
+            for (Client c : clients) {
+                if (c.getCpf().equals(cpf)) {
+                    client = c;
+                    break;
+                }
+            }
+
+            if (client == null) {
+                System.out.println("Cliente não encontrado!");
+                return;
+            }
+
+            CurrentAccount currentAccount = null;
+
+            for (CurrentAccount c : currentAccounts) {
+                if (c.getAccountNumber().equals(accountNumber) && c.getAgency() == agency) {
+                    currentAccount = c;
+                    break;
+                }
+            }
+
+            if (currentAccount == null) {
+                System.out.println("Conta não encontrada!");
+                return;
+            }
+
+            System.out.println("Bem vindo " + client.getName() + "!");
+
+            while (true) {
+                System.out.println("____________________ B A N C O  M A U T ___________________");
+                System.out.println("                                                           ");
+                System.out.println("                     1 - Depositar                         ");
+                System.out.println("                     2 - Sacar                             ");
+                System.out.println("                     3 - Transferir                        ");
+                System.out.println("                     4 - Extrato                           ");
+                System.out.println("                     5 - Sair                              ");
+                System.out.println("___________________________________________________________");
+            }
+        } else {
+            System.out.println("Digite o número da sua conta: ");
+            String accountNumber = input.next();
+
+            System.out.println("Digite a agência: ");
+            int agency = input.nextInt();
+
+            System.out.println("Digite o CPF: ");
+            String cpf = input.next();
+
+            Client client = null;
+
+            for (Client c : clients) {
+                if (c.getCpf().equals(cpf)) {
+                    client = c;
+                    break;
+                }
+            }
+
+            if (client == null) {
+                System.out.println("Cliente não encontrado!");
+                return;
+            }
+
+            SavingsAccount savingsAccount = null;
+
+            for (SavingsAccount c : savingsAccounts) {
+                if (c.getAccountNumber().equals(accountNumber) && c.getAgency() == agency) {
+                    savingsAccount = c;
+                    break;
+                }
+            }
+
+            if (savingsAccount == null) {
+                System.out.println("Conta não encontrada!");
+                return;
+            }
+
+            System.out.println("Bem vindo " + client.getName() + "!");
+            while (true) {
+                System.out.println("____________________ B A N C O  M A U T ___________________");
+                System.out.println("                                                           ");
+                System.out.println("                     1 - Depositar                         ");
+                System.out.println("                     2 - Sacar                             ");
+                System.out.println("                     3 - Transferir                        ");
+                System.out.println("                     4 - Extrato                           ");
+                System.out.println("                     5 - Sair                              ");
+                System.out.println("___________________________________________________________");
+            }
+        }
     }
 }
