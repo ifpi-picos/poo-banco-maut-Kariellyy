@@ -1,24 +1,29 @@
 
+import br.edu.ifpi.poo.models.Account;
 import br.edu.ifpi.poo.models.Address;
 import br.edu.ifpi.poo.models.Client;
 import br.edu.ifpi.poo.models.CurrentAccount;
 import br.edu.ifpi.poo.models.SavingsAccount;
 import br.edu.ifpi.poo.models.Transaction;
+import br.edu.ifpi.poo.notification.EmailNotification;
+import br.edu.ifpi.poo.notification.Notification;
+import br.edu.ifpi.poo.notification.SMSNotification;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import java.util.List;
 import java.util.Date;
 
 public class Main {
     private static Scanner input = new Scanner(System.in);
-    private static List<CurrentAccount> currentAccounts = new ArrayList<>();
-    private static List<SavingsAccount> savingsAccounts = new ArrayList<>();
+    private static List<Account> accounts = new ArrayList<>();
     private static List<Client> clients = new ArrayList<>();
     private static List<Transaction> transactions = new ArrayList<>();
+
     public static void main(String[] args) throws Exception {
-        while (true){
+        while (true) {
             System.out.println("____________________ B A N C O  M A U T ___________________");
             System.out.println("                                                           ");
             System.out.println("                     1 - Criar Conta Corrente              ");
@@ -30,7 +35,7 @@ public class Main {
             System.out.println("Digite a opção desejada: ");
             int option = input.nextInt();
 
-            switch (option){
+            switch (option) {
                 case 0:
                     System.out.println("Obrigado por utlizar o nosso Banco Maut!");
                     System.exit(0);
@@ -42,22 +47,32 @@ public class Main {
                     createSavingsAccount();
                     break;
                 case 3:
-                    enterAccount();
+                    System.out.println("Digite o número da conta: ");
+                    String accountNumber = input.next();
+
+                    System.out.println("Digite o número da agência: ");
+                    int agency = input.nextInt();
+
+                    enterAccount(accountNumber, agency);
                     break;
             }
 
-
         }
     }
-    private static void createCurrentAccount(){
+
+    private static void createCurrentAccount() {
         System.out.println("Deseja criar uma conta corrente? ");
         System.out.println("1 - Sim");
         System.out.println("2 - Não");
         int option = input.nextInt();
+        Notification notification = null;
 
-        if (option == 1){
+        if (option == 1) {
             System.out.println("Digite seu CPF: ");
             String cpf = input.next();
+
+            System.out.println("Digite o número da agência: ");
+            int agency = input.nextInt();
 
             Client client = null;
 
@@ -71,10 +86,10 @@ public class Main {
             if (client == null) {
                 System.out.println("Digite o seu nome: ");
                 String name = input.next();
-    
+
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
-    
+
                 while (true) {
                     try {
                         System.out.println("Digite sua data de nascimento: ");
@@ -84,28 +99,41 @@ public class Main {
                         System.out.println("Data inválida!");
                     }
                 }
-    
+
                 System.out.println("Logradouro: ");
-    
-                System.out.println("Digite seu número: ");;
+
+                System.out.println("Digite seu número: ");
+                ;
                 int number = input.nextInt();
-    
+
                 System.out.println("Digite seu bairro: ");
                 String neighborhood = input.next();
-    
+
                 System.out.println("Digite o nome da sua cidade: ");
                 String city = input.next();
-    
+
                 System.out.println("Digite a uf: ");
                 String uf = input.next();
-    
+
                 Address address = new Address(number, neighborhood, city, uf);
                 client = new Client(cpf, name, date, address);
                 clients.add(client);
             }
 
-            CurrentAccount currentAccount = new CurrentAccount(1, 0, client);
-            currentAccounts.add(currentAccount);
+            System.out.println("Notificações por email ou sms?");
+            System.out.println("1 - Email");
+            System.out.println("2 - SMS");
+            int notificationOption = input.nextInt();
+
+            
+            if (notificationOption == 1) {
+                notification = new EmailNotification();
+            } else if (notificationOption == 2) {
+                notification = new SMSNotification();
+            }
+
+            CurrentAccount currentAccount = new CurrentAccount(agency, client, notification);
+            accounts.add(currentAccount);
 
             System.out.println("Número da conta: " + currentAccount.getAccountNumber());
             System.out.println("Agência: " + currentAccount.getAgency());
@@ -116,19 +144,22 @@ public class Main {
         } else {
             System.out.println("Obrigado por utlizar o nosso Banco Maut!");
             System.exit(0);
-        }        
+        }
     }
 
-    private static void createSavingsAccount(){
+    private static void createSavingsAccount() {
         System.out.println("Deseja criar uam conta poupança? ");
         System.out.println("1 - Sim");
         System.out.println("2 - Não");
         int option = input.nextInt();
 
-        if (option == 1){
+        if (option == 1) {
             System.out.println("Digite seu CPF: ");
             String cpf = input.next();
 
+            System.out.println("Digite o número da agência: ");
+            int agency = input.nextInt();
+            
             Client client = null;
 
             for (Client c : clients) {
@@ -141,10 +172,10 @@ public class Main {
             if (client == null) {
                 System.out.println("Digite o seu nome: ");
                 String name = input.next();
-    
+
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = null;
-    
+
                 while (true) {
                     try {
                         System.out.println("Digite sua data de nascimento: ");
@@ -154,27 +185,41 @@ public class Main {
                         System.out.println("Data inválida!");
                     }
                 }
-    
-                System.out.println("Logradouro ");
-                System.out.println("Digite seu número: ");;
+
+                System.out.println("======Logradouro======");
+                System.out.println("                      ");
+                System.out.println("Digite seu número: ");
+                ;
                 int number = input.nextInt();
-    
+
                 System.out.println("Digite seu bairro: ");
                 String neighborhood = input.next();
-    
+
                 System.out.println("Digite o nome da sua cidade: ");
                 String city = input.next();
-    
+
                 System.out.println("Digite a uf: ");
                 String uf = input.next();
-    
+
                 Address address = new Address(number, neighborhood, city, uf);
                 client = new Client(cpf, name, date, address);
                 clients.add(client);
             }
+            
+            System.out.println("Notificações por email ou sms?");
+            System.out.println("1 - Email");
+            System.out.println("2 - SMS");
+            int notificationOption = input.nextInt();
 
-            SavingsAccount savingsAccount = new SavingsAccount(1, 0, 0, client);
-            savingsAccounts.add(savingsAccount);
+            Notification notification = null;
+            if (notificationOption == 1) {
+                notification = new EmailNotification();
+            } else if (notificationOption == 2) {
+                notification = new SMSNotification();
+            }
+
+            SavingsAccount savingsAccount = new SavingsAccount(agency, client, notification);
+            accounts.add(savingsAccount);
 
             System.out.println("Número da conta: " + savingsAccount.getAccountNumber());
             System.out.println("Agência: " + savingsAccount.getAgency());
@@ -185,114 +230,93 @@ public class Main {
         } else {
             System.out.println("Obrigado por utlizar o nosso Banco Maut!");
             System.exit(0);
-        }        
+        }
 
     }
 
-    private static void enterAccount(){
-        System.out.println("Sua conta é corrente ou poupança? ");
-        System.out.println("1 - Corrente");
-        System.out.println("2 - Poupança");
-        int option = input.nextInt();
+    private static void enterAccount(String accountNumber, int agency) {
+        Account accountLoggedIn = null;
 
-        if (option == 1){
-            System.out.println("Digite o número da sua conta: ");
-            String accountNumber = input.next();
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber) && account.getAgency() == agency) {
+                accountLoggedIn = account;
+                break;
+            }
+        }
 
-            System.out.println("Digite a agência: ");
-            int agency = input.nextInt();
+        if (accountLoggedIn == null) {
+            System.out.println("Conta não encontrada!");
+            return;
+        }
 
-            System.out.println("Digite o CPF: ");
-            String cpf = input.next();
+        while (true) {
+            System.out.println("===========================================================");
+            System.out.println("Bem vindo " + accountLoggedIn.getclient().getName() + "!" + "Seu saldo é R$: " + accountLoggedIn.getBalance());
+            System.out.println("===========================================================");
+            System.out.println("                     1 - Depositar                         ");
+            System.out.println("                     2 - Sacar                             ");
+            System.out.println("                     3 - Transferir                        ");
+            System.out.println("                     4 - Extrato                           ");
+            System.out.println("                     0 - Sair                              ");
+            System.out.println("===========================================================");
 
-            Client client = null;
+            System.out.println("Digite a opção desejada: ");
+            int newOption = input.nextInt();
 
-            for (Client c : clients) {
-                if (c.getCpf().equals(cpf)) {
-                    client = c;
+            switch (newOption) {
+                case 0:
+                    System.out.println("Obrigado por utilizar o Banco Maut!");
+                    return;
+                case 1:
+                    System.out.println("Digite o valor a ser depositado: R$ ");
+                    double value = input.nextDouble();
+                    accountLoggedIn.deposit(value);
+                    System.out.println("Depósito efetuado com sucesso!");
+                    Transaction deposit = new Transaction(value, "Depósito");
+                    transactions.add(deposit);
                     break;
-                }
-            }
+                case 2:
+                    System.out.println("Digite o valor a ser sacado: R$ ");
+                    double valueWithdraw = input.nextDouble();
+                    accountLoggedIn.withdraw(valueWithdraw);
+                    System.out.println("Saque efetuado com sucesso!");
 
-            if (client == null) {
-                System.out.println("Cliente não encontrado!");
-                return;
-            }
-
-            CurrentAccount currentAccount = null;
-
-            for (CurrentAccount c : currentAccounts) {
-                if (c.getAccountNumber().equals(accountNumber) && c.getAgency() == agency) {
-                    currentAccount = c;
+                    Transaction withdraw = new Transaction(valueWithdraw, "Saque");
+                    transactions.add(withdraw);
                     break;
-                }
-            }
+                case 3:
+                    System.out.println("Número da agência destino: ");
+                    int destinationAgencyNumber = input.nextInt();
 
-            if (currentAccount == null) {
-                System.out.println("Conta não encontrada!");
-                return;
-            }
+                    System.out.println("Número da conta destino: ");
+                    String destinationAccountNumber = input.next();
 
-            System.out.println("Bem vindo " + client.getName() + "!");
+                    System.out.println("Valor que deseja transferir: R$: ");
+                    double valueTransaction = input.nextDouble();
 
-            while (true) {
-                System.out.println("____________________ B A N C O  M A U T ___________________");
-                System.out.println("                                                           ");
-                System.out.println("                     1 - Depositar                         ");
-                System.out.println("                     2 - Sacar                             ");
-                System.out.println("                     3 - Transferir                        ");
-                System.out.println("                     4 - Extrato                           ");
-                System.out.println("                     5 - Sair                              ");
-                System.out.println("___________________________________________________________");
-            }
-        } else {
-            System.out.println("Digite o número da sua conta: ");
-            String accountNumber = input.next();
+                    // recupera o objeto da conta destino
+                    Account destinationAccount = null;
+                    for (Account account : accounts) {
+                        if (account.getAccountNumber().equals(destinationAccountNumber)
+                                && account.getAgency() == destinationAgencyNumber) {
+                            destinationAccount = account;
+                            break;
+                        }
+                    }
 
-            System.out.println("Digite a agência: ");
-            int agency = input.nextInt();
+                    // chamando o método transferir da conta logada
+                    accountLoggedIn.transfer(valueTransaction, destinationAccount);
 
-            System.out.println("Digite o CPF: ");
-            String cpf = input.next();
-
-            Client client = null;
-
-            for (Client c : clients) {
-                if (c.getCpf().equals(cpf)) {
-                    client = c;
+                    Transaction transfer = new Transaction(valueTransaction, "Transferência");
+                    transactions.add(transfer);
                     break;
-                }
-            }
 
-            if (client == null) {
-                System.out.println("Cliente não encontrado!");
-                return;
-            }
-
-            SavingsAccount savingsAccount = null;
-
-            for (SavingsAccount c : savingsAccounts) {
-                if (c.getAccountNumber().equals(accountNumber) && c.getAgency() == agency) {
-                    savingsAccount = c;
+                case 4:
+                    System.out.println("Extrato:");
+                    for (Transaction t : transactions) {
+                        System.out.println(t);
+                    }
                     break;
-                }
-            }
-
-            if (savingsAccount == null) {
-                System.out.println("Conta não encontrada!");
-                return;
-            }
-
-            System.out.println("Bem vindo " + client.getName() + "!");
-            while (true) {
-                System.out.println("____________________ B A N C O  M A U T ___________________");
-                System.out.println("                                                           ");
-                System.out.println("                     1 - Depositar                         ");
-                System.out.println("                     2 - Sacar                             ");
-                System.out.println("                     3 - Transferir                        ");
-                System.out.println("                     4 - Extrato                           ");
-                System.out.println("                     5 - Sair                              ");
-                System.out.println("___________________________________________________________");
             }
         }
     }

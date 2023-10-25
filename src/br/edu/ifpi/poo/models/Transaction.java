@@ -7,7 +7,7 @@ public class Transaction {
     private Date date;
     private double value;
 
-    public Transaction(String type, double value){
+    public Transaction(double value, String type){
         this.type = type;
         this.date = new Date();
         this.value = value;

@@ -1,10 +1,12 @@
 package br.edu.ifpi.poo.models;
 
+import br.edu.ifpi.poo.notification.Notification;
+
 public class SavingsAccount extends Account {
     private double perfomance; // Rendimento
 
-    public SavingsAccount(int agency, int accountNumber, double balance, Client client){
-        super(agency, client);
+    public SavingsAccount(int agency, Client client, Notification notification){
+        super(agency, client, notification);
     }
 
 
@@ -14,22 +16,26 @@ public class SavingsAccount extends Account {
 
     @Override
     public void withdraw(double value){
-        super.balance -= (value * 0.05) + value;
-        System.out.println("Saque realizado com sucesso!");
+        if (value > 0 && value <= super.balance){
+            double withdrawValue = (value * 0.05) + value;
+            super.balance -= withdrawValue;
+        }
     }
 
     @Override
     public void deposit(double value){
-        super.balance += value;
-        this.perfomance += value * 0.1;
+        if (value > 0) {
+            double depositValue = (value * 0.1) + value;
+            super.balance += depositValue;
+        }
     }
 
     @Override
-    public void transfer(double value, Account destinatiAccount){
-        if (balance < 0){
-            super.balance -= (value * 0.1) + value;
-            destinatiAccount.deposit(value);
-            System.out.println("Transferência realizada com sucesso!");
+    public void transfer(double value, Account destinationAccount){
+        if (value > 0 && value <= super.balance) {
+            double transferValue = (value * 0.1) + value;
+            withdraw(transferValue);
+            destinationAccount.deposit(value);
         }
     }
 }
