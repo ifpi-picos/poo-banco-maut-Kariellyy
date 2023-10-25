@@ -15,7 +15,7 @@ public class CurrentAccount extends Account {
     }
 
     @Override
-    public void withdraw(double value) {
+    public void withdraw(double value, boolean notification, boolean createTransection) {
         if (super.balance < value) {
             double difference = super.balance - value;
             super.balance = 0;
@@ -23,14 +23,19 @@ public class CurrentAccount extends Account {
         } else {
             super.balance -= value;
         }
-        super.getNotification().sendNotification("Saque", value);
 
-        Transaction transaction = new Transaction(value, "Saque");
-        super.addTransaction(transaction);        
+        if (notification){
+            super.getNotification().sendNotification("Saque", value);
+        }
+
+        if (createTransection){
+            Transaction transaction = new Transaction(value, "Saque");
+            super.addTransaction(transaction);        
+        }
     }
 
     @Override
-    public void deposit(double value) {
+    public void deposit(double value, boolean notification, boolean createTransection) {
         if (value > 0) {
             if (overdraft > 0) {
                 // Se houver um valor positivo no cheque especial, parte do depósito é usada
@@ -49,23 +54,28 @@ public class CurrentAccount extends Account {
                 //é adicionado ao saldo
                 super.balance += value;
             }
-            super.getNotification().sendNotification("Depósito", value);
+            if (notification){
+                super.getNotification().sendNotification("Depósito", value);
+            }
 
-            Transaction transaction = new Transaction(value, "Depósito");
-            super.addTransaction(transaction);
+            if (createTransection){
+                Transaction transaction = new Transaction(value, "Depósito");
+                super.addTransaction(transaction);
+            }
+
         }
     }
 
     @Override
     public void transfer(double value, Account destinationAccount) {
         if (transferQuantity < 2) { // transferência sem taxa;
-            withdraw(value);
-            destinationAccount.deposit(value);
+            withdraw(value, false, false);
+            destinationAccount.deposit(value, false, true);
             transferQuantity++;
         } else {
             double transferValue = (value * 0.1) + value;
-            withdraw(transferValue);
-            destinationAccount.deposit(value);
+            withdraw(transferValue, false, false);
+            destinationAccount.deposit(value, false, true);
         }
 
         super.getNotification().sendNotification("Transferência", value);

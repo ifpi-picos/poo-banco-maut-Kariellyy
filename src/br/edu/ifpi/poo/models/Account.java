@@ -63,9 +63,9 @@ public abstract class Account {
         
     }
 
-    public abstract void deposit(double value);
+    public abstract void deposit(double value, boolean notification, boolean createTransection);
     
-    public abstract void withdraw(double value);
+    public abstract void withdraw(double value, boolean notification, boolean createTransection);
 
     public abstract void transfer(double value, Account destinationAccount);
 }
