@@ -105,6 +105,9 @@ public class Main {
             System.out.println("");
             System.out.println("============ Logradouro ==============");
 
+            System.out.print("Digite o nome da sua rua: ");
+            String publicPlace = input.next();
+
             System.out.print("Digite seu número: ");
             int number = input.nextInt();
 
@@ -118,7 +121,7 @@ public class Main {
             String uf = input.next();
             System.out.println("======================================");
 
-            Address address = new Address(number, neighborhood, city, uf);
+            Address address = new Address( publicPlace, number, neighborhood, city, uf);
             client = new Client(cpf, name, date, address);
             clients.add(client);
         }
@@ -186,6 +189,10 @@ public class Main {
 
             System.out.println("");
             System.out.println("============ Logradouro ==============");
+
+            System.out.print("Digite o nome da sua rua: ");
+            String publicPlace = input.next();
+
             System.out.print("Digite seu número: ");
             int number = input.nextInt();
 
@@ -199,7 +206,7 @@ public class Main {
             String uf = input.next();
             System.out.println("======================================");
 
-            Address address = new Address(number, neighborhood, city, uf);
+            Address address = new Address(publicPlace, number, neighborhood, city, uf);
             client = new Client(cpf, name, date, address);
             clients.add(client);
         }
