@@ -20,6 +20,11 @@ public class SavingsAccount extends Account {
             double withdrawValue = (value * 0.05) + value;
             super.balance -= withdrawValue;
         }
+
+        super.getNotification().sendNotification("Saque", value);
+
+        Transaction transaction = new Transaction(value, "Saque");
+        super.addTransaction(transaction);
     }
 
     @Override
@@ -28,6 +33,11 @@ public class SavingsAccount extends Account {
             double depositValue = (value * 0.1) + value;
             super.balance += depositValue;
         }
+
+        super.getNotification().sendNotification("Depósito", value);
+
+        Transaction transaction = new Transaction(value, "Depósito");
+        super.addTransaction(transaction);
     }
 
     @Override
@@ -37,5 +47,9 @@ public class SavingsAccount extends Account {
             withdraw(transferValue);
             destinationAccount.deposit(value);
         }
+        super.getNotification().sendNotification("Transfêrencia", value);
+
+        Transaction transaction = new Transaction(value, "Transfêrencia");
+        super.addTransaction(transaction);
     }
 }

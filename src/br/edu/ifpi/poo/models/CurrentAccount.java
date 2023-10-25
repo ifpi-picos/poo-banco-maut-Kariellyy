@@ -14,13 +14,6 @@ public class CurrentAccount extends Account {
         return overdraft;
     }
 
-    public void overdraft(double balance, double value) {
-        if (balance < 0) {
-            balance -= value;
-            System.out.println("Transferência realizada com sucesso!");
-        }
-    }
-
     @Override
     public void withdraw(double value) {
         if (super.balance < value) {
@@ -30,6 +23,10 @@ public class CurrentAccount extends Account {
         } else {
             super.balance -= value;
         }
+        super.getNotification().sendNotification("Saque", value);
+
+        Transaction transaction = new Transaction(value, "Saque");
+        super.addTransaction(transaction);        
     }
 
     @Override
@@ -49,9 +46,13 @@ public class CurrentAccount extends Account {
                 }
             } else {
                 // Se o cheque especial estiver zerado ou negativo, todo o valor do depósito
-                // é adicionado ao saldo
+                //é adicionado ao saldo
                 super.balance += value;
             }
+            super.getNotification().sendNotification("Depósito", value);
+
+            Transaction transaction = new Transaction(value, "Depósito");
+            super.addTransaction(transaction);
         }
     }
 
@@ -66,6 +67,11 @@ public class CurrentAccount extends Account {
             withdraw(transferValue);
             destinationAccount.deposit(value);
         }
+
+        super.getNotification().sendNotification("Transferência", value);
+
+        Transaction transaction = new Transaction(value, "Transferência");
+        super.addTransaction(transaction);
     }
 
     public void transfer(String destinationAccountNumber, int destinationAgencyNumber, Object object) {
