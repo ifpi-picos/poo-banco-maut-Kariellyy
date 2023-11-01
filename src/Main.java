@@ -1,4 +1,9 @@
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
 import br.edu.ifpi.poo.models.Account;
 import br.edu.ifpi.poo.models.Address;
 import br.edu.ifpi.poo.models.Client;
@@ -9,22 +14,25 @@ import br.edu.ifpi.poo.notification.EmailNotification;
 import br.edu.ifpi.poo.notification.Notification;
 import br.edu.ifpi.poo.notification.SMSNotification;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import java.util.List;
-import java.util.Date;
-
 public class Main {
     private static Scanner input = new Scanner(System.in);
     private static List<Account> accounts = new ArrayList<>();
     private static List<Client> clients = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
+
+        // tudo certo, parabéns!
         // Contas para teste
-        accounts.add(new CurrentAccount(1, new Client("12345678910", "João", new Date(), new Address(1, "Centro", "Teresina", "PI")), new EmailNotification()));
-        accounts.add(new SavingsAccount(1, new Client("12345678911", "Maria", new Date(), new Address(1, "Centro", "Teresina", "PI")), new SMSNotification()));
+        accounts.add(
+                new CurrentAccount(1,
+                        new Client("12345678910", "João", new Date(),
+                                new Address(1, "Centro", "Teresina", "PI")),
+                        new EmailNotification()));
+        accounts.add(
+                new SavingsAccount(1,
+                        new Client("12345678911", "Maria", new Date(),
+                                new Address(1, "Centro", "Teresina", "PI")),
+                        new SMSNotification()));
         while (true) {
             clearScreen();
             System.out.println("-------------------- B A N C O  M A U T -----------------");
@@ -121,7 +129,7 @@ public class Main {
             String uf = input.next();
             System.out.println("======================================");
 
-            Address address = new Address( publicPlace, number, neighborhood, city, uf);
+            Address address = new Address(publicPlace, number, neighborhood, city, uf);
             client = new Client(cpf, name, date, address);
             clients.add(client);
         }
@@ -152,7 +160,7 @@ public class Main {
     private static void createSavingsAccount() {
         clearScreen();
         System.out.println("==================== Conta Poupança ====================");
-        
+
         System.out.print("Digite seu CPF: ");
         String cpf = input.next();
 
@@ -258,11 +266,12 @@ public class Main {
         while (true) {
             clearScreen();
             System.out.println("===========================================================");
-            System.out.println("Bem vindo " + accountLoggedIn.getclient().getName() + "!" + " Seu saldo é: R$ "
-                    + accountLoggedIn.getBalance());
+            System.out.println("Bem vindo " + accountLoggedIn.getclient().getName() + "!"
+                    + " Seu saldo é: R$ " + accountLoggedIn.getBalance());
             if (accountLoggedIn instanceof CurrentAccount) {
                 System.out.println("===========================================================");
-                System.out.println("Cheque Especial Utilizado: R$ " + ((CurrentAccount) accountLoggedIn).getOverdraft());
+                System.out.println("Cheque Especial Utilizado: R$ "
+                        + ((CurrentAccount) accountLoggedIn).getOverdraft());
             }
             System.out.println("===========================================================");
             System.out.println("|                    1 - Depositar                        |");
@@ -285,10 +294,12 @@ public class Main {
                     System.out.print("Digite o valor a ser depositado: R$ ");
                     double value = input.nextDouble();
                     clearScreen();
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     accountLoggedIn.deposit(value, true, true);
                     System.out.println("Depósito efetuado com sucesso!");
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     wait(input);
                     break;
                 case 2:
@@ -296,10 +307,12 @@ public class Main {
                     System.out.print("Digite o valor a ser sacado: R$ ");
                     double valueWithdraw = input.nextDouble();
                     clearScreen();
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     accountLoggedIn.withdraw(valueWithdraw, true, true);
                     System.out.println("Saque efetuado com sucesso!");
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     wait(input);
                     break;
                 case 3:
@@ -309,7 +322,7 @@ public class Main {
 
                     System.out.print("Valor que deseja transferir: R$: ");
                     double valueTransaction = input.nextDouble();
-                    
+
                     // recupera o objeto da conta destino
                     Account destinationAccount = null;
                     for (Account account : accounts) {
@@ -321,9 +334,11 @@ public class Main {
 
                     // chamando o método transferir da conta logada
                     clearScreen();
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     accountLoggedIn.transfer(valueTransaction, destinationAccount);
-                    System.out.println("===========================================================");
+                    System.out
+                            .println("===========================================================");
                     wait(input);
                     break;
 
@@ -339,9 +354,10 @@ public class Main {
             }
         }
     }
-    public static void clearScreen() {  
-        System.out.print("\033[H\033[2J");  
-        System.out.flush();  
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     public static void wait(Scanner scanner) {
